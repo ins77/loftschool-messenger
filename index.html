@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">   -->
+    <link rel="stylesheet" href="./styles.css">
+    <title>Messenger</title>
+  </head>
+  <body>
+    <div class="wrap">
+        <div class="menu">
+          <div class="user-info">
+            <a href="#" class="user-info__photo image-photo-wrap" id="button-load-photo">
+              <div class="user-info__photo-text">No photo</div>
+              <img src="" class="image-photo hidden">
+            </a>
+            <div class="user-info__welcome" id="name-welcome">Добро пожаловать!</div>
+          </div>
+
+          <div class="users">
+            <div class="users__title">Участники ()</div>
+            <ul class="users__list" id="users-list"></ul>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="messages hidden" id="messages-wrap"></div>
+          
+          <form class="form-message" id="form-message">
+            <input type="text" name="message" class="input form-message__input" placeholder="Напишите свое сообщение здесь">
+            <input type="submit" disabled name="button" class="button form-message__button" value="Отправить сообщение">
+          </form>
+
+          <div class="popup">
+            <div class="popup__title">Авторизация</div>
+            <div class="popup__content">
+              <form class="form-auth" id="form-auth">
+                <input type="text" class="input popup__input" name="fullname" placeholder="ФИО">
+                <input type="text" class="input popup__input" name="nickname" placeholder="Ник">
+
+                <button type="submit" class="button">Войти</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="popup hidden" id="popup-load-photo">
+              <div class="popup__title">Загрузка фотографии</div>
+              <div class="popup__content">
+                <form class="form-photo" id="form-load-photo">
+                  <input type="file" id="input-photo">
+                  <label for="input-photo">
+                      <div class="form-photo__image-wrap">
+                        Перетащите сюда фото
+                        <img src="" class="form-photo__image" id="image">
+                      </div>
+                  </label>
+                  
+                  <div class="buttons">
+                      <input type="button" class="button" name="cancel" value="Отмена">
+                      <input type="submit" class="button" name="load" value="Загрузить">
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="./index.js"></script>
+  </body>
+</html>

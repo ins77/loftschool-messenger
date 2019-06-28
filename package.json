@@ -1,0 +1,14 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Dima Sukhinin",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^7.0.1"
+  }
+}
