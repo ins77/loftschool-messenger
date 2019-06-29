@@ -95,7 +95,7 @@ const renderMessages = (messages) => {
 
 const onFormAuthSubmit = (event) => {
   event.preventDefault();
-  formAuth.closest('.popup').classList.add('hidden');
+  popupAuth.classList.add('hidden');
   messagesWrap.classList.remove('hidden');
   formMessage.button.removeAttribute('disabled');
   socket.emit('user', {name: formAuth.fullname.value, nick: formAuth.nickname.value});
@@ -104,9 +104,8 @@ const onFormAuthSubmit = (event) => {
 const onFormMessageSubmit = (event) => {
   event.preventDefault();
   
-  const dateNow = new Date();
   const message = {
-    date: `${dateNow.getHours()}:${dateNow.getMinutes()}`,
+    date: (new Date()).toLocaleTimeString('en-GB'),
     text: formMessage.message.value
   };
 
