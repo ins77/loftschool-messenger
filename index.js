@@ -1,5 +1,3 @@
-// todo почистить верстку, убрать иконки картинок, когда нет фото
-
 const socket = io('http://localhost:3000');
 const image = document.querySelector('#image');
 const inputPhoto = document.querySelector('#input-photo');
@@ -56,7 +54,11 @@ const renderUserInfo = (element, user) => {
   const photo = element.querySelector('.image-photo');
   const name = element.querySelector('.user-info__welcome');
 
-  photo.src = user.photo;
+  if (user.photo) {
+    photo.src = user.photo;
+    photo.classList.add('image-photo_visible');
+  }
+
   name.innerHTML = user.name;
 };
 
@@ -74,11 +76,15 @@ const renderMessages = (messages) => {
   messagesWrap.innerHTML = '';
 
   messages.forEach(message => {
+    const imgPhotoClasses = message.photo
+      ? `image-photo image-photo_visible`
+      : `image-photo`;
+
     const template = 
       `<div class="message">
         <div class="message__photo image-photo-wrap">
           <div class="message__photo-text">No photo</div>
-          <img src="${message.photo}" class="image-photo"></img>
+          <img src="${message.photo}" class="${imgPhotoClasses}"></img>
         </div>
         <div class="message__content">
           <div class="message__header">

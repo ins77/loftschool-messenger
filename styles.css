@@ -1,11 +1,11 @@
 *, *::before, *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
   
 h1,
@@ -14,293 +14,299 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0;
-    font-weight: normal;
+  margin: 0;
+  font-weight: normal;
 }
 
 body {
-    font: 400 12px 'Fira Sans', sans-serif;
-    color: #4f4f4f;
-    overflow: hidden;
+  font: 400 12px 'Fira Sans', sans-serif;
+  color: #4f4f4f;
+  overflow: hidden;
 }
 
 html, body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .wrap {
-    width: 1080px;
-    display: flex;
-    margin: 0 auto;
-    padding: 50px 0;
-    height: 100vh;
-    color: #fff;
-    min-height: 500px;
+  width: 1080px;
+  display: flex;
+  margin: 0 auto;
+  padding: 50px 0;
+  height: 100vh;
+  color: #fff;
+  min-height: 500px;
 }
 
 .menu {
-    width: 380px;
-    padding: 10px;
-    background-color: orange;
-    border-radius: 6px 0 0 6px;
-    border: 1px solid gray;
-    border-right: 0;
+  width: 380px;
+  padding: 10px;
+  background-color: orange;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid gray;
+  border-right: 0;
 }
 
 .content {
-    position: relative;
-    width: 700px;
-    border-radius: 0 6px 6px 0;
-    border: 1px solid gray;
+  position: relative;
+  width: 700px;
+  border-radius: 0 6px 6px 0;
+  border: 1px solid gray;
 }
 
 .form-message {
-    position: absolute;
-    bottom: 0;
-    display: flex;
-    width: 100%;
-    background-color: gray;
-    padding: 10px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  background-color: gray;
+  padding: 10px;
 }
 
 .form-message__input {
-    flex-grow: 1;
-    margin-right: 10px;
+  flex-grow: 1;
+  margin-right: 10px;
 }
 
 .form-message__button {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .input {
-    display: block;
-    width: 100%;
-    height: 42px;
-    padding: 5px 10px;
-    border: 1px solid orange;
-    outline: 0;
-    border-radius: 3px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  padding: 5px 10px;
+  border: 1px solid orange;
+  outline: 0;
+  border-radius: 3px;
 }
 
 .buttons {
-    display: flex;
-    margin-left: auto;
+  display: flex;
+  margin-left: auto;
 }
 
 .button {
-    border: 0;
-    min-width: 100px;
-    height: 42px;
-    padding: 10px;
-    margin-left: auto;
-    background-color: orange;
-    border-radius: 3px;
-    color: #fff;
-    cursor: pointer;
-    outline: 0;
+  border: 0;
+  min-width: 100px;
+  height: 42px;
+  padding: 10px;
+  margin-left: auto;
+  background-color: orange;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  outline: 0;
 }
 
 .button + .button {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .button:hover {
-    background-color: rgb(184, 60, 2);
+  background-color: rgb(184, 60, 2);
 }
 
 .button:disabled {
-    cursor: default;
-    background-color: lightgray;
+  cursor: default;
+  background-color: lightgray;
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
 }
 
 .user-info__photo {
-    position: relative;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    border-radius: 50%;
-    background-color: lightgray;
-    overflow: hidden;
-    text-align: center;
-    color: gray;
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: lightgray;
+  overflow: hidden;
+  text-align: center;
+  color: gray;
 }
 
 .user-info__photo-text {
-    position: absolute;
-    padding: 0 5px;
-    font-size: 12px;
-    line-height: 1;
+  position: absolute;
+  padding: 0 5px;
+  font-size: 12px;
+  line-height: 1;
 }
 
 .popup {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    width: 400px;
-    transform: translateX(-50%);
-    background-color: gray;
-    padding: 10px;
-    border-radius: 6px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 400px;
+  transform: translateX(-50%);
+  background-color: gray;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 .popup__title {
-    margin-bottom: 10px;
-    font-size: 14px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .popup__input {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .popup__content {
-    padding: 10px;
-    border-radius: 6px;
-    background-color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #fff;
 }
 
 .form-auth {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .users {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .users__title {
-    margin-bottom: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
 }
 
 .users__list {
-    padding-left: 20px;
-    font-size: 14px;
+  padding-left: 20px;
+  font-size: 14px;
 }
 
 .users__list-item {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .messages {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    height: calc(100% - 62px);
-    padding: 10px;
-    color: #000;
-    overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  height: calc(100% - 62px);
+  padding: 10px;
+  color: #000;
+  overflow-y: auto;
 }
 
 .message {
-    display: flex;
-    padding: 10px;
-    border: 1px solid gray;
-    border-radius: 6px;
-    background-color: rgb(230, 229, 229);
+  display: flex;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  background-color: rgb(230, 229, 229);
 }
 
 .message + .message {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .message__photo {
-    position: relative;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    border-radius: 50%;
-    background-color: lightgray;
-    overflow: hidden;
-    text-align: center;
-    color: gray;
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: lightgray;
+  overflow: hidden;
+  text-align: center;
+  color: gray;
 }
 
 .message__photo-text {
-    position: absolute;
-    padding: 0 5px;
-    font-size: 12px;
-    line-height: 1;
+  position: absolute;
+  padding: 0 5px;
+  font-size: 12px;
+  line-height: 1;
 }
 
 .message__header {
-    display: flex;
-    margin-bottom: 10px;
-    font-size: 14px;
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .message__name {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .message__date {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 input[type=file] {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
 .form-photo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-photo__image-wrap {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 180px;
-    height: 180px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    border: 1px dashed gray;
-    font-size: 14px;
-    color: gray;
-    cursor: pointer;
-    overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px dashed gray;
+  font-size: 14px;
+  color: gray;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .form-photo__image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%); 
 }
 
 .image-photo {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%); 
+  z-index: -1;
+}
+
+.image-photo_visible {
+  z-index: 10;
 }
