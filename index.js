@@ -147,10 +147,10 @@ const onInputPhotoChange = (event) => {
 
   if (!file) return;
 
-  if (file.size > 512 * 1024) {
-    alert('Файл слишком большой!');
-  } else if (file.type !== 'image/jpeg') {
+  if (file.type !== 'image/jpeg') {
     alert('Формат файла должен быть JPEG');
+  } else if (file.size > 512 * 1024) {
+    alert('Файл слишком большой!');
   } else {
     fileReader.readAsDataURL(file);
   }
