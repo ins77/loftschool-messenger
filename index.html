@@ -1,23 +1,24 @@
 <!doctype html>
 <html>
   <head>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">   -->
     <link rel="stylesheet" href="./styles.css">
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script defer src="./index.js"></script>
     <title>Messenger</title>
   </head>
   <body>
     <div class="wrap">
         <div class="menu">
-          <div class="user-info">
+          <div class="user-info" id="user-info">
             <a href="#" class="user-info__photo image-photo-wrap" id="button-load-photo">
               <div class="user-info__photo-text">No photo</div>
-              <img src="" class="image-photo hidden">
+              <img src="" class="image-photo">
             </a>
-            <div class="user-info__welcome" id="name-welcome">Добро пожаловать!</div>
+            <div class="user-info__welcome">Добро пожаловать!</div>
           </div>
 
           <div class="users">
-            <div class="users__title">Участники ()</div>
+            <div class="users__title" id="participants-title"></div>
             <ul class="users__list" id="users-list"></ul>
           </div>
         </div>
@@ -30,7 +31,7 @@
             <input type="submit" disabled name="button" class="button form-message__button" value="Отправить сообщение">
           </form>
 
-          <div class="popup">
+          <div class="popup" id="popup-auth">
             <div class="popup__title">Авторизация</div>
             <div class="popup__content">
               <form class="form-auth" id="form-auth">
@@ -63,7 +64,5 @@
             </div>
         </div>
     </div>
-    
-    <script src="./index.js"></script>
   </body>
 </html>

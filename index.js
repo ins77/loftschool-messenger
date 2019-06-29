@@ -1,61 +1,64 @@
-const socket = new WebSocket("ws://localhost:3000");
+// todo сделать функции чистыми
+// todo почистить верстку, убрать иконки картинок, когда нет фото
 
+const socket = io('http://localhost:3000');
 const image = document.querySelector('#image');
 const inputPhoto = document.querySelector('#input-photo');
 const messagesWrap = document.querySelector('#messages-wrap');
 const usersList = document.querySelector('#users-list');
 const formAuth = document.querySelector('#form-auth');
 const formMessage = document.querySelector('#form-message');
-const nameWelcome = document.querySelector('#name-welcome');
+const userInfo = document.querySelector('#user-info');
 const buttonPhoto = document.querySelector('#button-load-photo');
 const formLoadPhoto = document.querySelector('#form-load-photo');
 const popupLoadPhoto = document.querySelector('#popup-load-photo');
+const popupAuth = document.querySelector('#popup-auth');
 const buttonFormLoadPhotoClose = document.querySelector('#button-form-load-cancel');
+const participantsTitle = document.querySelector('#participants-title');
 
 const fileReader = new FileReader();
-const currentUser = {name: '', nick: '', photo: '', type: 'user'};
-const currentPhoto = {type: 'photoUrl', photoUrl: ''};
-const users = new Set();
 
-socket.addEventListener('close', (event) => {
-  console.log('event', event);
+socket.on('render-messages', messages => {
+  renderMessages(messages);
 });
 
-socket.addEventListener('message', (event) => {
-  const data = JSON.parse(event.data);
-
-  console.log('data', data);
-
-  if (data.type === 'message') {
-    addMessage(data);
-  }
-
-  if (data.type === 'user') {
-    users.add(data);
-    renderUsers(users);
-  }
-
-  if (data.type === 'userPhoto') {
-    setPhotos(data);
-  }
-
-  if (data.type === 'disconnect') {
-    console.log('disconnect');
-    const filteredUsers = removeUser(users, userToDelete);
-    console.log(filteredUsers);
-    renderUsers(filteredUsers);
-  }
+socket.on('current-user', user => {
+  renderUserInfo(userInfo, user);
 });
 
-// todo функция должна быть чистая
-const removeUser = (users, userToDelete) => {
-  users.forEach(user => {
-    if (user.id === userToDelete.userId) {
-      users.delete(user);
-    }
-  });
+socket.on('add-message', messages => {
+  renderMessages(messages);
+});
 
-  return users;
+socket.on('add-photo', messages => {
+  renderMessages(messages);
+});
+
+socket.on('user-connected', (currentUser, users) => {
+  renderParticipantsNumber(participantsTitle, users.length);
+  renderUsers(users);
+  renderUserInfo(userInfo, currentUser);
+});
+
+socket.on('user-disconnected', users => {
+  renderParticipantsNumber(participantsTitle, users.length);
+  renderUsers(users);
+});
+
+const renderParticipantsNumber = (element, number) => {
+  element.innerHTML = `Участники (${number})`;
+};
+
+const renderUserInfo = (element, user) => {
+  if (!user.current) {
+    return;
+  }
+
+  const photo = element.querySelector('.image-photo');
+  const name = element.querySelector('.user-info__welcome');
+
+  photo.src = user.photo;
+  name.innerHTML = user.name;
 };
 
 const renderUsers = (users) => {
@@ -65,103 +68,82 @@ const renderUsers = (users) => {
     const template = `<li class="users__list-item">${user.name}</li>`
 
     usersList.innerHTML += template;
-    nameWelcome.innerHTML = user.name;
   });
 };
 
-const setPhotos = ({ photoUrl }) => {
-  const photoContainers = [...document.querySelectorAll('.image-photo-wrap')];
+const renderMessages = (messages) => {
+  messagesWrap.innerHTML = '';
 
-  setCurrentPhoto(photoUrl);
-
-  for (let photoContainer of photoContainers) {
-    const photo = photoContainer.querySelector('.image-photo');
-
-    photo.classList.remove('hidden');
-    photo.src = photoUrl;
-  }
-};
-
-const setCurrentUser = (name, nick, photo = '') => {
-  currentUser.name = name;
-  currentUser.nick = nick;
-  currentUser.photo = photo;
-};
-
-const setCurrentPhoto = (photoUrl) => {
-  currentPhoto.photoUrl = photoUrl;
-};
-
-const addMessage = (message) => {
-  if (currentPhoto.photoUrl) {
-    
-  }
-
-  const template = 
-    `<div class="message">
-      <div class="message__photo image-photo-wrap">
-        <div class="message__photo-text">No photo</div>
-        <img src="${currentPhoto.photoUrl}" class="image-photo hidden">
-      </div>
-      <div class="message__content">
-        <div class="message__header">
-          <div class="message__name">${message.name}</div>
-          <div class="message__date">${message.date}</div>
+  messages.forEach(message => {
+    const template = 
+      `<div class="message">
+        <div class="message__photo image-photo-wrap">
+          <div class="message__photo-text">No photo</div>
+          <img src="${message.photo}" class="image-photo"></img>
         </div>
-        <div class="message__text">${message.text}</div>
-      </div>
-    </div>`;
+        <div class="message__content">
+          <div class="message__header">
+            <div class="message__name">${message.userName}</div>
+            <div class="message__date">${message.date}</div>
+          </div>
+          <div class="message__text">${message.text}</div>
+        </div>
+      </div>`;
 
-  messagesWrap.innerHTML += template;
+    messagesWrap.innerHTML += template;
+  });
 };
 
-// todo вынести слушатель
-formAuth.addEventListener('submit', (event) => {
+const onFormAuthSubmit = (event) => {
   event.preventDefault();
   formAuth.closest('.popup').classList.add('hidden');
   messagesWrap.classList.remove('hidden');
   formMessage.button.removeAttribute('disabled');
-  setCurrentUser(formAuth.fullname.value, formAuth.nickname.value);
-  socket.send(JSON.stringify(currentUser));
-});
+  socket.emit('user', {name: formAuth.fullname.value, nick: formAuth.nickname.value});
+};
 
-formMessage.addEventListener('submit', (event) => {
+const onFormMessageSubmit = (event) => {
   event.preventDefault();
+  
+  const dateNow = new Date();
   const message = {
-    photo: currentUser.photo,
-    name: currentUser.name,
-    date: '2019.06.26',
-    text: formMessage.message.value,
-    type: 'message'
+    date: `${dateNow.getHours()}:${dateNow.getMinutes()}`,
+    text: formMessage.message.value
   };
 
   formMessage.message.value = '';
 
-  socket.send(JSON.stringify(message));
-});
+  socket.emit('message', message);
+};
 
-buttonPhoto.addEventListener('click', (event) => {
+const onPhotoClick = (event) => {
   event.preventDefault();
+
+  if (!popupAuth.classList.contains('hidden')) {
+    return;
+  }
+
   popupLoadPhoto.classList.remove('hidden');
   formMessage.button.setAttribute('disabled', true);
-});
+};
 
-formLoadPhoto.addEventListener('submit', (event) => {
+const onFormLoadPhotoSubmit = (event) => {
   event.preventDefault();
   popupLoadPhoto.classList.add('hidden');
   formMessage.button.removeAttribute('disabled');
-  socket.send(JSON.stringify({type: 'userPhoto', photoUrl: image.src}));
-});
 
-formLoadPhoto.cancel.addEventListener('click', () => {
+  socket.emit('change-photo', image.src);
+};
+
+const onFormLoadPhotoCancelClick = () => {
   popupLoadPhoto.classList.add('hidden');
-});
+};
 
-fileReader.addEventListener('load', () => {
+const onFileReaderLoad = () => {
   image.src = fileReader.result;
-});
+};
 
-inputPhoto.addEventListener('change', (event) => {
+const onInputPhotoChange = (event) => {
   const [file] = event.target.files;
 
   if (!file) return;
@@ -173,4 +155,13 @@ inputPhoto.addEventListener('change', (event) => {
   } else {
     fileReader.readAsDataURL(file);
   }
-});
+};
+
+
+formAuth.addEventListener('submit', onFormAuthSubmit);
+formMessage.addEventListener('submit', onFormMessageSubmit);
+buttonPhoto.addEventListener('click', onPhotoClick);
+formLoadPhoto.addEventListener('submit', onFormLoadPhotoSubmit);
+formLoadPhoto.cancel.addEventListener('click', onFormLoadPhotoCancelClick);
+fileReader.addEventListener('load', onFileReaderLoad);
+inputPhoto.addEventListener('change', onInputPhotoChange);
