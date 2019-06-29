@@ -8,6 +8,7 @@
   </head>
   <body>
     <div class="wrap">
+      
         <div class="menu">
           <div class="user-info" id="user-info">
             <a href="#" class="user-info__photo image-photo-wrap" id="button-load-photo">
@@ -24,6 +25,7 @@
         </div>
 
         <div class="content">
+
           <div class="messages hidden" id="messages-wrap"></div>
           
           <form class="form-message" id="form-message">
@@ -44,24 +46,25 @@
           </div>
 
           <div class="popup hidden" id="popup-load-photo">
-              <div class="popup__title">Загрузка фотографии</div>
-              <div class="popup__content">
-                <form class="form-photo" id="form-load-photo">
-                  <input type="file" id="input-photo">
-                  <label for="input-photo">
-                      <div class="form-photo__image-wrap">
-                        Перетащите сюда фото
-                        <img src="" class="form-photo__image" id="image">
-                      </div>
-                  </label>
-                  
-                  <div class="buttons">
-                      <input type="button" class="button" name="cancel" value="Отмена">
-                      <input type="submit" class="button" name="load" value="Загрузить">
-                  </div>
-                </form>
-              </div>
+            <div class="popup__title">Загрузка фотографии</div>
+            <div class="popup__content">
+              <form class="form-photo" id="form-load-photo">
+                <input type="file" id="input-photo">
+                <label for="input-photo">
+                    <div class="form-photo__image-wrap">
+                      Перетащите сюда фото
+                      <img src="" class="form-photo__image" id="image">
+                    </div>
+                </label>
+                
+                <div class="buttons">
+                    <input type="button" class="button" name="cancel" value="Отмена">
+                    <input type="submit" class="button" name="load" value="Загрузить">
+                </div>
+              </form>
             </div>
+          </div>
+
         </div>
     </div>
   </body>

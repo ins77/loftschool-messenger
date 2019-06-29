@@ -161,7 +161,6 @@ const onInputPhotoChange = (event) => {
   }
 };
 
-
 formAuth.addEventListener('submit', onFormAuthSubmit);
 formMessage.addEventListener('submit', onFormMessageSubmit);
 buttonPhoto.addEventListener('click', onPhotoClick);
