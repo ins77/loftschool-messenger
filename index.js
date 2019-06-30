@@ -56,24 +56,20 @@ const renderParticipantsNumber = (element, number) => {
   element.innerHTML = `Участники (${number})`;
 };
 
-const isPopupAuthShown = (popupAuth) => {
-  return !popupAuth.classList.contains('hidden');
-};
-
-const renderUserInfo = (element, user) => {
-  if (!user.current) {
+const renderUserInfo = (element, { current, photo, name }) => {
+  if (!current) {
     return;
   }
 
-  const photo = element.querySelector('.image-photo');
-  const name = element.querySelector('.user-info__welcome');
+  const photoElement = element.querySelector('.image-photo');
+  const nameElement = element.querySelector('.user-info__welcome');
 
-  if (user.photo) {
-    photo.src = user.photo;
-    photo.classList.add('image-photo_visible');
+  if (!!photo) {
+    photoElement.src = photo;
+    photoElement.classList.add('image-photo_visible');
   }
 
-  name.innerHTML = user.name;
+  nameElement.innerHTML = name;
 };
 
 const renderUsers = (users) => {
@@ -113,12 +109,25 @@ const renderMessages = (messages) => {
   });
 };
 
+const isPopupAuthShown = (popupAuth) => {
+  return !popupAuth.classList.contains('hidden');
+};
+
 const onFormAuthSubmit = (event) => {
   event.preventDefault();
+
+  const { fullname: { value: name }, nickname: { value: nick } }= formAuth;
+
+  if (name.trim() === '' || nick.trim() === '') {
+    alert('Заполните имя и ник');
+
+    return;
+  }
+
   popupAuth.classList.add('hidden');
   messagesWrap.classList.remove('hidden');
   formMessage.button.removeAttribute('disabled');
-  socket.emit('user', {name: formAuth.fullname.value, nick: formAuth.nickname.value});
+  socket.emit('user', { name, nick });
 };
 
 const onFormMessageSubmit = (event) => {
@@ -137,7 +146,7 @@ const onFormMessageSubmit = (event) => {
 const onPhotoClick = (event) => {
   event.preventDefault();
 
-  if (!popupAuth.classList.contains('hidden')) {
+  if (isPopupAuthShown(popupAuth)) {
     return;
   }
 
@@ -147,6 +156,7 @@ const onPhotoClick = (event) => {
 
 const onFormLoadPhotoSubmit = (event) => {
   event.preventDefault();
+
   popupLoadPhoto.classList.add('hidden');
   formMessage.button.removeAttribute('disabled');
 
