@@ -21,13 +21,7 @@ io.on('connection', socket => {
   socket.on('change-photo', photo => {
     users[socket.id].photo = photo;
 
-    const messagesToSend = messages.map(message => {
-      if (users[socket.id].name === message.userName) {
-        message.photo = photo;
-      }
-
-      return message;
-    });
+    const messagesToSend = getMessagesWithPhotos(messages, users[socket.id], photo);
 
     socket.emit('current-user', { ...users[socket.id], current: true });
     io.emit('add-photo', messagesToSend);
@@ -53,6 +47,16 @@ io.on('connection', socket => {
     
     socket.broadcast.emit('user-disconnected', usersToSend);
   });
+
+  const getMessagesWithPhotos = (messages, currentUser, photo) => {
+    return messages.map(message => {
+      if (currentUser.name === message.userName) {
+        message.photo = photo;
+      }
+
+      return message;
+    });
+  };
 
   const removeExistingUser = (users, existedUser) => {
     Object.keys(users).forEach(key => {

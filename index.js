@@ -1,3 +1,5 @@
+const maxPhotoSize = 512 * 1024;
+
 const socket = io('http://localhost:3000');
 const image = document.querySelector('#image');
 const inputPhoto = document.querySelector('#input-photo');
@@ -32,18 +34,30 @@ socket.on('add-photo', messages => {
 });
 
 socket.on('user-connected', (currentUser, users) => {
+  if (isPopupAuthShown(popupAuth)) {
+    return;
+  }
+
   renderParticipantsNumber(participantsTitle, users.length);
   renderUsers(users);
   renderUserInfo(userInfo, currentUser);
 });
 
 socket.on('user-disconnected', users => {
+  if (isPopupAuthShown(popupAuth)) {
+    return;
+  }
+
   renderParticipantsNumber(participantsTitle, users.length);
   renderUsers(users);
 });
 
 const renderParticipantsNumber = (element, number) => {
   element.innerHTML = `Участники (${number})`;
+};
+
+const isPopupAuthShown = (popupAuth) => {
+  return !popupAuth.classList.contains('hidden');
 };
 
 const renderUserInfo = (element, user) => {
@@ -154,7 +168,7 @@ const onInputPhotoChange = (event) => {
 
   if (file.type !== 'image/jpeg') {
     alert('Формат файла должен быть JPEG');
-  } else if (file.size > 512 * 1024) {
+  } else if (file.size > maxPhotoSize) {
     alert('Файл слишком большой!');
   } else {
     fileReader.readAsDataURL(file);
