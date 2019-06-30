@@ -9,11 +9,13 @@ io.on('connection', socket => {
     removeExistingUser(users, existedUser);
 
     users[socket.id] = !!existedUser ? existedUser : { name: user.name, photo: '' };
+    users[socket.id].isActive = true;
   
-    const usersArr = Object.values(users);
+    const usersArr = Object.values(users).filter(user => user.isActive);
 
     socket.broadcast.emit('user-connected', users[socket.id], usersArr);
     socket.emit('user-connected', {...users[socket.id], current: true }, usersArr);
+    socket.emit('render-messages', messages);
   });
 
   socket.on('change-photo', photo => {
@@ -40,9 +42,15 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
+    if (!users[socket.id]) {
+      return;
+    }
+
     const usersArr = Object.values(users);
     const usersToSend = usersArr.filter(user => user.name !== users[socket.id].name);
 
+    users[socket.id].isActive = false;
+    
     socket.broadcast.emit('user-disconnected', usersToSend);
   });
 
